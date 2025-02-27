@@ -8,7 +8,6 @@
 GeneralMemAllocatorLL::GeneralMemAllocatorLL(std::size_t capacity, SelectPolicy policy) : MemAllocator(capacity) 
 {
   d_policy = policy;
-  d_totalMem = capacity;
   init();
 }
 

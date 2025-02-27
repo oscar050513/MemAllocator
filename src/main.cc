@@ -31,6 +31,10 @@ void testAlloc(std::size_t execTimes)
    }
 }
 
+void testFixedSizeMemAllocator() {
+
+
+}
 
 
 int main()
