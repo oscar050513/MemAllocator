@@ -22,8 +22,8 @@ class GeneralMemAllocatorLL : public MemAllocator {
      BEST_FIT
   };
   using Node = typename SinglyLinkedList<FreeHeader>::Node;
-  GeneralMemAllocatorLL(std::size_t capacity, SelectPolicy policy = SelectPolicy::FIRST_FIT);
-  virtual ~GeneralMemAllocatorLL(); 
+  GeneralMemAllocatorLL(std::size_t capacity, SelectPolicy policy = SelectPolicy::FIRST_FIT) noexcept;
+  virtual ~GeneralMemAllocatorLL() noexcept; 
   virtual void* alloc(const std::size_t size, const std::size_t alignment = 1) override;
   virtual void dealloc(void* ptr) override;
   void printFreeBlocks() const;
