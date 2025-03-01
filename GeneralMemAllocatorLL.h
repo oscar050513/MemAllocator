@@ -36,11 +36,8 @@ class GeneralMemAllocatorLL : public MemAllocator {
  private:
   SinglyLinkedList<FreeHeader> d_freeBlockList;  
   SelectPolicy d_policy;
-  //std::size_t d_capacity;
   void* d_dataStartAddr{nullptr};
   mutable std::mutex d_mtx;
-  //std::atomic<std::size_t> d_usedMem;
-  //std::atomic<std::size_t> d_peakMem;
 };
 
 #endif  /* GENERALMEMALLOCATORLL_H */

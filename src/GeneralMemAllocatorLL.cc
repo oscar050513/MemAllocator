@@ -5,13 +5,13 @@
 #include "GeneralMemAllocatorLL.h"
 #include "utils.h"
 
-GeneralMemAllocatorLL::GeneralMemAllocatorLL(std::size_t capacity, SelectPolicy policy) : MemAllocator(capacity) 
+GeneralMemAllocatorLL::GeneralMemAllocatorLL(std::size_t capacity, SelectPolicy policy) noexcept : MemAllocator(capacity) 
 {
   d_policy = policy;
   init();
 }
 
-GeneralMemAllocatorLL::~GeneralMemAllocatorLL() 
+GeneralMemAllocatorLL::~GeneralMemAllocatorLL() noexcept
 {
   free(d_dataStartAddr);
   d_dataStartAddr = nullptr;

@@ -5,19 +5,22 @@
 #include <unistd.h>
 #include <atomic>
 #include "GeneralMemAllocatorLL.h"
+#include "FixedBlockAllocator.h" 
 
 std::atomic<int> counter {0};
 
-static std::unique_ptr<GeneralMemAllocatorLL>& getAllocator()
+static std::unique_ptr<GeneralMemAllocatorLL>& getGeneralAllocator()
 {
   static std::unique_ptr<GeneralMemAllocatorLL> allocator(new GeneralMemAllocatorLL(2000));
   return allocator;
 }
 
-inline void printClientInfo()
+static std::unique_ptr<FixedBlockAllocator>& getFixedAllocator()
 {
-  std::cout<<"pid : "<<getpid()<<" , tid : "<<std::this_thread::get_id()<<"\n";
+  static std::unique_ptr<FixedBlockAllocator> allocator(new FixedBlockAllocator(2000,50));
+  return allocator;
 }
+
 void testAlloc(std::size_t execTimes)
 {
    //printClientInfo();
@@ -25,34 +28,36 @@ void testAlloc(std::size_t execTimes)
    {
      //getAllocator()->printFreeBlocks();
      //std::cout<<"counter is : "<<counter.load()<<"\n";
-     getAllocator()->alloc(10);
+     getGeneralAllocator()->alloc(10);
      counter.fetch_add(1);
      --execTimes;
    }
 }
 
 void testFixedSizeMemAllocator() {
+  auto& allocator = getFixedAllocator();
+  auto* p1 = allocator->alloc();
+  std::cout<<"first allocated block is : "<<p1<<"\n";
+  allocator->printFreeBlocks();
 
-
+  allocator->dealloc(p1);
+  allocator->printFreeBlocks(); 
 }
 
 
 int main()
 {
-  //std::unique_ptr<GeneralMemAllocatorLL> a(new GeneralMemAllocatorLL(1000));
-  //getAllocator()->printFreeBlocks();
-  //getAllocator()->printFreeBlocks();
+
   const int n = 10;
   std::vector<std::thread> threads;
   for(int i=1;i<=n;++i)
   {
-    threads.emplace_back(testAlloc,5);
+    threads.emplace_back(testFixedSizeMemAllocator);
   }
   for(auto& t : threads)
   {
     t.join();
   }
-  //getAllocator()->printFreeBlocks();
   /*
   void* p1 = a->alloc(10);
   a->printFreeBlocks();
@@ -69,6 +74,6 @@ int main()
   a->dealloc(p2);
   a->printFreeBlocks();
   */
-  
+  //testFixedSizeMemAllocator(); 
   return 0;
 }

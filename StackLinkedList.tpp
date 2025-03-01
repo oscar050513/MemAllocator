@@ -7,13 +7,14 @@ void StackLinkedList<T>::push(Node* allocatedNode) {
 }
 
 template <typename T>
-Node* StackLinkedList<T>::pop() {
+typename StackLinkedList<T>::Node* StackLinkedList<T>::pop() {
   if(d_topNode == nullptr)
   {
     return nullptr;
   }
  Node* ret = d_topNode;
  d_topNode = d_topNode->next; 
+ ret->next = nullptr;
  return ret;
 }
 
