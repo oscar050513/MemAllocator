@@ -5,7 +5,7 @@
   3. address alignment for memory allocation
   4. thread-safe usage of the memory allocator
 
-## Implement a fixed size chunk memory allocator which syupport:
+## Implement a fixed size chunk memory allocator which support:
   1. hot memory allocation
   2. thread-safe usage of memory allocator
   
