@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.10)
+project(MemoryAllocator CXX)
+
+set(CMAKE_CXX_STANDARD 11)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/deploy/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/deploy/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/deploy/bin)
+
+add_subdirectory(src)
+
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION ${PROJECT_SOURCE_DIR}/deploy/include)
+
